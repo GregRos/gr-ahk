@@ -1,5 +1,5 @@
-﻿global pythonMain := A_ScriptDir "\python\main.py"
-
+﻿global pythonMain := A_ScriptDir "\media-keys\python\main.py"
+OutputDebug, % pythonMain
 global Shell := ComObjCreate("Wscript.Shell")
 class SpotifyAutomator extends gDeclaredMembersOnly {
     _process := ""

@@ -11,7 +11,7 @@ global MoveWindowToDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualD
 Menu, Tray, Add, DesktopSwitcher Help, OnHelp_WindowsDesktopSwitcher
 
 OnHelp_WindowsDesktopSwitcher() {
-    Run, % A_ScriptDir "\help\windows-desktop-switcher.html"
+    Run, % A_ScriptDir "\desktop-switcher\windows-desktop-switcher.html"
 }
 ; Main
 SetKeyDelay, 75
