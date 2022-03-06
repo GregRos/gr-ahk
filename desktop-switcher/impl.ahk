@@ -8,7 +8,11 @@ global _g_desktopIdToName := {}
 hVirtualDesktopAccessor := DllCall("LoadLibrary", "Str", A_ScriptDir . "\VirtualDesktopAccessor.dll", "Ptr")
 global IsWindowOnDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "IsWindowOnDesktopNumber", "Ptr")
 global MoveWindowToDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "MoveWindowToDesktopNumber", "Ptr")
+Menu, Tray, Add, DesktopSwitcher Help, OnHelp_WindowsDesktopSwitcher
 
+OnHelp_WindowsDesktopSwitcher() {
+    Run, % A_ScriptDir "\help\windows-desktop-switcher.html"
+}
 ; Main
 SetKeyDelay, 75
 mapDesktopsFromRegistry()
@@ -365,10 +369,4 @@ deleteVirtualDesktop() {
     DesktopCount--
     CurrentDesktop--
     OutputDebug, [delete] desktops: %DesktopCount% current: %CurrentDesktop%
-}
-
-Menu, Tray, Add, DesktopSwitcher Help, OnHelp_WindowsDesktopSwitcher
-
-OnHelp_WindowsDesktopSwitcher() {
-    Run, % A_ScriptDir "\help\windows-desktop-switcher.html"
 }

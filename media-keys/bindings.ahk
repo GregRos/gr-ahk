@@ -1,12 +1,4 @@
-﻿
-
-Menu, Tray, Add, MediaKeys Help, OnHelp_SuperMediaKeys
-
-OnHelp_SuperMediaKeys() {
-    Run, % A_ScriptDir "\help\super-media-keys.html"
-}
-
-GetNumpadMode() {
+﻿GetNumpadMode() {
     isNumpad0 := GetKeyState("Numpad0", "P")
     isNumpadDot := GetKeyState("NumpadDot", "P")
     if (!isNumpad0 && !isNumpadDot) {

@@ -22,11 +22,14 @@ Struct(Structure,pointer:=0,init:=0){
     return new _Struct(Structure,pointer,init)
 } 
 
-#Include _win-mixer.ahk
-#include _spotify-automator.ahk
-#include _spotify-notifications.ahk
-#Include _desktops.ahk
 
-#include windows-desktop-switcher.ahk
+#include desktop-switcher\
+#include impl.ahk
 
-#include super-media-keys.ahk
+#include ..\media-keys\
+#include impl.ahk
+
+
+#include ..\
+#include desktop-switcher\bindings.ahk
+#include media-keys\bindings.ahk
