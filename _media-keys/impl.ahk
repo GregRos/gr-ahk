@@ -1,7 +1,7 @@
-Menu, Tray, Add, MediaKeys Help, OnHelp_MediaKeys
+Menu, Tray, Add, Help: MediaKeys, OnHelp_MediaKeys
 
 OnHelp_MediaKeys() {
-    Run, % A_ScriptDir "\media-keys\media-keys.html"
+    Run, % A_ScriptDir "\_media-keys\media-keys.html"
 }
 
 #Include _win-mixer.ahk

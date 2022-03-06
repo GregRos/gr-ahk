@@ -8,7 +8,7 @@ SetNumLockState, AlwaysOn
 SetCapsLockState, AlwaysOff
 Menu, Tray, Icon, images\icon.ico
 Menu, Tray, Tip, GR-AHK
-
+Menu, Tray, NoStandard
 #Maxthreads, 100
 #MaxThreadsPerHotkey, 4
 #include <sizeof>
@@ -16,20 +16,32 @@ Menu, Tray, Tip, GR-AHK
 #include <gutils>
 #include <TT>
 
-gUtils(true)
 ; Required definition for TT.ahk
 Struct(Structure,pointer:=0,init:=0){
     return new _Struct(Structure,pointer,init)
-} 
+}
+
+global LoadedIndex := 1
+
+Loaded(name) {
+    OutputDebug, [LOADER] (%LoadedIndex%) Component %name% loaded
+    LoadedIndex:= LoadedIndex + 1
+}
 
 
-#include desktop-switcher\
+#include _desktop-switcher\
 #include impl.ahk
+Loaded("DesktopSwitcher")
 
-#include ..\media-keys\
+#include ..\_media-keys\
 #include impl.ahk
+Loaded("MediaKeys")
 
+#include ..\_fix-wsl2-x11-dolphin
+#include impl.ahk
+Loaded("Fix-WSL2-X11-Dolphin")
 
 #include ..\
-#include desktop-switcher\bindings.ahk
-#include media-keys\bindings.ahk
+#include _desktop-switcher\bindings.ahk
+#include _media-keys\bindings.ahk
+Loaded("Hotkeys")

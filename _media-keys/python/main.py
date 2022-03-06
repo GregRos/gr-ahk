@@ -14,7 +14,7 @@ cli_parser = argparse.ArgumentParser(description='spotify automation script')
 if __name__ == '__main__':
     args = cli_parser.parse_args()
     repl = SpotifyAutomator(SpotifyInterface())
-    repl.out("Spotify Automator Online!")
+    repl.out("[PYTHON] Spotify API module loaded")
     for line in sys.stdin:
         line = line.rstrip()
         repl.exec_line(line)

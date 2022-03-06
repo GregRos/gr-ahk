@@ -5,18 +5,18 @@ CurrentDesktop := 1 ; Desktop count is 1-indexed (Microsoft numbers them this wa
 LastOpenedDesktop := 1
 global _g_desktopIdToName := {}
 ; DLL
-hVirtualDesktopAccessor := DllCall("LoadLibrary", "Str", A_ScriptDir . "\VirtualDesktopAccessor.dll", "Ptr")
+hVirtualDesktopAccessor := DllCall("LoadLibrary", "Str", A_ScriptDir . "\_desktop-switcher\VirtualDesktopAccessor.dll", "Ptr")
 global IsWindowOnDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "IsWindowOnDesktopNumber", "Ptr")
 global MoveWindowToDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "MoveWindowToDesktopNumber", "Ptr")
-Menu, Tray, Add, DesktopSwitcher Help, OnHelp_WindowsDesktopSwitcher
+Menu, Tray, Add, Help: DesktopSwitcher, OnHelp_WindowsDesktopSwitcher
 
 OnHelp_WindowsDesktopSwitcher() {
-    Run, % A_ScriptDir "\desktop-switcher\windows-desktop-switcher.html"
+    Run, % A_ScriptDir "\_desktop-switcher\windows-desktop-switcher.html"
 }
 ; Main
 SetKeyDelay, 75
 mapDesktopsFromRegistry()
-OutputDebug, [loading] desktops: %DesktopCount% current: %CurrentDesktop%
+OutputDebug, [DesktopSwitcher] desktops: %DesktopCount% current: %CurrentDesktop%
 
 ; This function examines the registry to build an accurate list of the current virtual desktops and which one we're currently on.
 ; List of desktops appears to be in HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VirtualDesktops
@@ -58,13 +58,11 @@ mapDesktopsFromRegistry()
     while (CurrentDesktopId and i < DesktopCount) {
         StartPos := (i * IdLength) + 1
         DesktopIter := SubStr(DesktopList, StartPos, IdLength)
-        OutputDebug, The iterator is pointing at %DesktopIter% and count is %i%.
         desktopIdToName[i + 1] := DesktopIter
         ; Break out if we find a match in the list. If we didn't find anything, keep the
         ; old guess and pray we're still correct :-D.
         if (DesktopIter = CurrentDesktopId) {
             CurrentDesktop := i + 1
-            OutputDebug, Current desktop number is %CurrentDesktop% with an ID of %DesktopIter%.
         }
         i++
     }
@@ -94,7 +92,6 @@ mapDesktopsFromRegistry()
             desktopIdToName[i] := "Desktop " i
         } 
         name := desktopIdToName[i]
-        OutputDebug, %i% Desktop ID %BinId% called %name%
     }
     _g_desktopIdToName := desktopIdToName
 }
@@ -108,14 +105,12 @@ getSessionId() {
         OutputDebug, Error getting current process id: %ErrorLevel%
         return
     }
-    OutputDebug, Current Process Id: %ProcessId%
 
     DllCall("ProcessIdToSessionId", "UInt", ProcessId, "UInt*", SessionId)
     if ErrorLevel {
         OutputDebug, Error getting session id: %ErrorLevel%
         return
     }
-    OutputDebug, Current Session Id: %SessionId%
     return SessionId
 }
 
