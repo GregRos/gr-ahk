@@ -10,7 +10,7 @@
 
 CheckDolphins() {
     SetTitleMatchMode, 2
-    WinWaitActive, Dolphin ahk_exe VcXsrv.exe ahk_class vcxsrv/x X rl
+    WinWaitActive, Dolphin@Greg-WSL2
     last:=WinExist()
     ModifyWindowStyle(last)
     SetTimer, CheckDolphins, -250

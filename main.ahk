@@ -21,6 +21,18 @@ Struct(Structure,pointer:=0,init:=0){
     return new _Struct(Structure,pointer,init)
 }
 
+OnRealExit() {
+    ExitApp
+}
+
+OnRealSuspend() {
+    Suspend, Toggle
+}
+
+OnRealRestart() {
+    Reload
+}
+
 global LoadedIndex := 1
 
 Loaded(name) {
@@ -28,7 +40,9 @@ Loaded(name) {
     LoadedIndex:= LoadedIndex + 1
 }
 
-
+Menu, Tray, Add, Suspend, OnRealSuspend
+Menu, Tray, Add, Restart, OnRealRestart
+Menu, Tray, Add, Exit, OnRealExit
 #include _desktop-switcher\
 #include impl.ahk
 Loaded("DesktopSwitcher")
