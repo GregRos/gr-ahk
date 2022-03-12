@@ -1,4 +1,6 @@
-﻿ModifyWindowStyle(w) {
+﻿#Persistent
+#SingleInstance, Force
+ModifyWindowStyle(w) {
     WinGet, MyStyle, Style, % "ahk_id " w
     hasRightStyles := MyStyle & (0x20000 | 0x10000)
     if (!hasRightStyles) {

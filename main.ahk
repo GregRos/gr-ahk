@@ -55,6 +55,10 @@ Loaded("MediaKeys")
 #include impl.ahk
 Loaded("Fix-WSL2-X11-Dolphin")
 
+#include ..\_fix-wsl2-x11-jb-window
+#include impl.ahk
+Loaded("Fix-WSL2-X11-JB-Window")
+
 #include ..\
 #include _desktop-switcher\bindings.ahk
 #include _media-keys\bindings.ahk
