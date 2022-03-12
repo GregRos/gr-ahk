@@ -2,12 +2,12 @@
 #SingleInstance, Force
 ModifyWindowStyle(w) {
     WinGet, MyStyle, Style, % "ahk_id " w
-    hasRightStyles := MyStyle & (0x20000 | 0x10000)
+    rightStyle := 0x30000
+    hasRightStyles := MyStyle & rightStyle
     if (!hasRightStyles) {
         OutputDebug, % "Dolphin instance " w " has missing buttons. Adding buttons." 
+        WinSet, Style, +%rightStyle%, % "ahk_id " w
     }
-    WinSet, Style, +0x20000, % "ahk_id " w
-    WinSet, Style, +0x10000, % "ahk_id " w
 }
 
 CheckDolphins() {
