@@ -1,3 +1,4 @@
+#SingleInstance, Force
 Menu, Tray, Add, Help: MediaKeys, OnHelp_MediaKeys
 
 OnHelp_MediaKeys() {
@@ -7,3 +8,4 @@ OnHelp_MediaKeys() {
 #Include _win-mixer.ahk
 #include _spotify-automator.ahk
 #include _spotify-notifications.ahk
+Loaded("MediaKeys")

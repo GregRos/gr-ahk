@@ -45,21 +45,19 @@ Menu, Tray, Add, Restart, OnRealRestart
 Menu, Tray, Add, Exit, OnRealExit
 #include _desktop-switcher\
 #include impl.ahk
-Loaded("DesktopSwitcher")
 
 #include ..\_media-keys\
 #include impl.ahk
-Loaded("MediaKeys")
 
 #include ..\_fix-wsl2-x11-dolphin
 #include impl.ahk
-Loaded("Fix-WSL2-X11-Dolphin")
 
 #include ..\_fix-wsl2-x11-jb-window
 #include impl.ahk
-Loaded("Fix-WSL2-X11-JB-Window")
+
+#include ..\_fix-weird-window-positions
+#include impl.ahk
 
 #include ..\
 #include _desktop-switcher\bindings.ahk
 #include _media-keys\bindings.ahk
-Loaded("Hotkeys")

@@ -19,3 +19,4 @@ CheckDolphins() {
 }
 
 SetTimer, CheckDolphins, -250
+Loaded("Fix-WSL2-X11-Dolphin")

@@ -365,3 +365,4 @@ deleteVirtualDesktop() {
     CurrentDesktop--
     OutputDebug, [delete] desktops: %DesktopCount% current: %CurrentDesktop%
 }
+Loaded("DesktopSwitcher")

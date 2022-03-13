@@ -1,6 +1,5 @@
 ﻿#Persistent
-
-; #SingleInstance, Force
+#SingleInstance, Force
 ; WinHook.Event.Add(0x8005, 0x8005, "FixJBTest")
 ; #include ..\bundled\winhook.ahk
 
@@ -50,3 +49,4 @@
 ; }
 
 ; SetTimer, CheckJBs, -250
+Loaded("Fix-WSL2-X11-JetBrains-Window")
