@@ -3,7 +3,7 @@
 
 FWWP_Action(w) {
     WinGetPos, X, Y, Width, Height, ahk_id %w%
-    if (Y < 0) {
+    if (Y < -15  && !GetKeyState("LButton", "P")) {
         OutputDebug, [WeirdWindowFixer] Found %w% being naughty. Spanking.
         ; I am not ashamed of myself.
         WinMove, ahk_id %w%, , , 0
@@ -13,9 +13,9 @@ FWWP_Action(w) {
 FWWP_Check() {
     SetTitleMatchMode, 2
     last:=WinExist("A")
-    ModifyWindowStyle(last)
-    SetTimer, CheckDolphins, -250
+    FWWP_Action(last)
+    SetTimer, FWWP_Check, -250
 }
 
 SetTimer, FWWP_Check, -250
-Loaded("FWWP_Action")
+Loaded("Fix-Weird-Window-Positions")

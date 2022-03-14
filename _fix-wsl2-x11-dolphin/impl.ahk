@@ -1,6 +1,6 @@
 ﻿#Persistent
 #SingleInstance, Force
-ModifyWindowStyle(w) {
+FWXD_ModifyWindowStyle(w) {
     WinGet, MyStyle, Style, % "ahk_id " w
     rightStyle := 0x30000
     hasRightStyles := MyStyle & rightStyle
@@ -10,13 +10,13 @@ ModifyWindowStyle(w) {
     }
 }
 
-CheckDolphins() {
+FWXD_CheckDolphins() {
     SetTitleMatchMode, 2
     WinWaitActive, Dolphin@Greg-WSL2
     last:=WinExist()
-    ModifyWindowStyle(last)
-    SetTimer, CheckDolphins, -250
+    FWXD_ModifyWindowStyle(last)
+    SetTimer, FWXD_CheckDolphins, -250
 }
 
-SetTimer, CheckDolphins, -250
+SetTimer, FWXD_CheckDolphins, -250
 Loaded("Fix-WSL2-X11-Dolphin")
