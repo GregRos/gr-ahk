@@ -8,7 +8,7 @@ KSN_Action(w) {
 
 KSN_Check() {
     SetTitleMatchMode, 2
-    WinWait, This is an unregistered copy
+    WinWait, This is an unregistered
     KSN_Action(WinExist())
     SetTimer, KSN_Check, -250
 }

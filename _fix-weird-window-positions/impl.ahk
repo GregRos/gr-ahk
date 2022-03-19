@@ -2,6 +2,9 @@
 #SingleInstance, Force
 
 FWWP_Action(w) {
+    if (!w) {
+        return
+    }
     WinGetPos, X, Y, Width, Height, ahk_id %w%
     if (Y < -15  && !GetKeyState("LButton", "P")) {
         OutputDebug, [WeirdWindowFixer] Found %w% being naughty. Spanking.
