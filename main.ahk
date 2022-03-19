@@ -58,6 +58,9 @@ Menu, Tray, Add, Exit, OnRealExit
 #include ..\_fix-weird-window-positions
 #include impl.ahk
 
+#include ..\_kill-sublime-nag
+#include impl.ahk
+
 #include ..\
 #include _desktop-switcher\bindings.ahk
 #include _media-keys\bindings.ahk
