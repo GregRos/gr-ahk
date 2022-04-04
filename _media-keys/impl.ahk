@@ -8,4 +8,8 @@ OnHelp_MediaKeys() {
 #Include _win-mixer.ahk
 #include _spotify-automator.ahk
 #include _spotify-notifications.ahk
-Loaded("MediaKeys")
+
+MK_Start() {
+    Loaded("MediaKeys")
+}
+

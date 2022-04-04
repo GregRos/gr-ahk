@@ -43,24 +43,31 @@ Loaded(name) {
 Menu, Tray, Add, Suspend, OnRealSuspend
 Menu, Tray, Add, Restart, OnRealRestart
 Menu, Tray, Add, Exit, OnRealExit
-#include _desktop-switcher\
-#include impl.ahk
 
-#include ..\_media-keys\
+#include _desktop-switcher
 #include impl.ahk
+#include ..
 
-#include ..\_fix-wsl2-x11-dolphin
+#include _media-keys
 #include impl.ahk
+#include ..
 
-#include ..\_fix-wsl2-x11-jb-window
+#include _fix-wsl2-x11-dolphin
 #include impl.ahk
+#include ..
 
-#include ..\_fix-weird-window-positions
+#include _only-valid-window-sizes
 #include impl.ahk
+#include ..
 
-#include ..\_kill-sublime-nag
+#include _kill-sublime-nag
 #include impl.ahk
+#include ..
 
-#include ..\
+FWXD_Start()
+OVWS_Start()
+DS_Start()
+MK_Start()
 #include _desktop-switcher\bindings.ahk
 #include _media-keys\bindings.ahk
+

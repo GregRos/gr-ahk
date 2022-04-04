@@ -1,5 +1,4 @@
-﻿#Persistent
-#SingleInstance, Force
+﻿
 FWXD_ModifyWindowStyle(w) {
     WinGet, MyStyle, Style, % "ahk_id " w
     if (!hasRightStyles) {
@@ -23,5 +22,8 @@ FWXD_CheckDolphins() {
     SetTimer, FWXD_CheckDolphins, -350
 }
 
-SetTimer, FWXD_CheckDolphins, -350
-Loaded("Fix-WSL2-X11-Dolphin")
+FWXD_Start() {
+    SetTimer, FWXD_CheckDolphins, -1000
+    Loaded("Fix WSL2 X11 Dolphin")
+}
+

@@ -13,5 +13,8 @@ KSN_Check() {
     SetTimer, KSN_Check, -250
 }
 
-SetTimer, KSN_Check, -250
-Loaded("Kill-Sublime-Nag")
+KSN_Start() {
+    SetTimer, KSN_Check, -1000
+    Loaded("KillSublimeNag")
+}
+
