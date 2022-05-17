@@ -1,9 +1,5 @@
 ﻿
-CapsLock::
-    if (GetKeyState("CapsLock", "T")) {
-        SetCapsLockState, AlwaysOff
-    }
-    return
+
 
 ComObjArrayToString(arr) {
     res := ""
@@ -25,6 +21,12 @@ GetHotkeyMode() {
         return "C"
     }
 }
+
+CapsLock::
+    if (GetKeyState("CapsLock", "T")) {
+        SetCapsLockState, AlwaysOff
+    }
+    return
 
 #if GetHotkeyMode() != ""
     RButton::Return

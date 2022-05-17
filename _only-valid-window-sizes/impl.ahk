@@ -25,12 +25,18 @@ OVWS_Action(w) {
     if (!w) {
         return
     }
+    WinGet, Style, Style, ahk_id %w%
+    if (!(Style & 0x40000)) {
+        OutputDebug, Found dialog!
+        return
+    }
     WinGetPos, X, Y, Width, Height, ahk_id %w%
     target:= {y: y, x: x, h: height, w: width, rules: []}
     if (GetKeyState("LButton", "P")) {
         return
     }
-    if (Y < -15) {
+    PixelRatio := A_ScreenHeight / 70
+    if (Y < -PixelRatio) {
         target.y := 0
         target.rules.Push("TopOutOfBounds")
     }

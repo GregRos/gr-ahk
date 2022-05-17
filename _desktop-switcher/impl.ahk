@@ -155,18 +155,22 @@ _getJetBrainsProjectName(hwnd) {
     ; Main Window
     results := StrSplit(windowTitle, " – ")
     if (results.MaxIndex() > 1) {
-        project := results[1]
+        RegExMatch(results[1], "O)(.*?) \[.*", Output)
+        if (Output) {
+            project := Output.Value(1)
+        }
+    } else {
+        ; Tool Windows
+        results := StrSplit(windowTitle, " - ")
+        if (results.MaxIndex() > 1) {
+            project := results[2]
+        }
+        if (!project) {
+            return "ahk_id " hwnd
+        }
     }
 
-    ; Tool Windows
-    results := StrSplit(windowTitle, " - ")
-    if (results.MaxIndex() > 1) {
-        project := results[2]
-    }
-    if (!project) {
-        return "ahk_id " hwnd
-    }
-regex = i).*( - \Q%project%\E|\Q%project%\E – ).*
+regex = i).*( - \Q%project%\E|\Q%project%\E (?:\[.*])? – ).*
 return regex
 }
 
