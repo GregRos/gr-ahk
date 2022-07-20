@@ -7,6 +7,3 @@ chdir(p)
 system("git reset --hard HEAD")
 system("git clean -f")
 system("git pull --ff-only")
-
-
-
