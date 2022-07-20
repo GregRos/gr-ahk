@@ -42,20 +42,12 @@ Numpad1::
     spotify.Exec("seek -30")
 Return
 
-Numpad7::
-    spotify.Exec("heart album")
-Return
-
-Numpad9::
-    spotify.Exec("heart artist")
-Return
-
 Numpad2::
     spotify.Exec("restart-track")
 Return
 
 Numpad8::
-    spotify.Exec("heart track")
+    spotify.Exec("heart")
 Return
 
 NumLock::
@@ -111,6 +103,13 @@ NumpadMult::
     WinGet, hwnd, ID, A
     MuteApp(hwnd)
 Return
+
+Numpad1::
+    spotify.Exec("start-playlist 36VDQ8dEZlqteRrGQTTJTw")
+Return
+
+Numpad2::
+    spotify.Exec("start-playlist 3aCWycDjhkVtsx1G8OyULu")
 #if
 
 Numpad0::

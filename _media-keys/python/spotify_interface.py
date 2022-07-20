@@ -155,6 +155,14 @@ class SpotifyInterface:
     def set_repeat(self, mode):
         self._spotify.repeat(mode)
 
+    def start_playlist(self, playlist: str):
+        pl = self._spotify.playlist(
+            playlist_id=playlist
+        )
+        self._spotify.start_playback(
+            context_uri=pl['uri']
+        )
+
     def skip_album(self):
         initial = self._get_current()
         old_repeat = initial.get('repeat_state')

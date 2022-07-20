@@ -3,6 +3,9 @@
   <component name="AhkProjectSettings">
     <option name="defaultAhkSdk" value="AutoHotkey v1.1.33" />
   </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
   <component name="MarkdownNavigator.ProfileManager" plain-text-search-scope="Project Files" />
   <component name="MarkdownProjectSettings" wasCopied="true">
     <PreviewSettings splitEditorLayout="SPLIT" splitEditorPreview="PREVIEW" useGrayscaleRendering="false" zoomFactor="1.0" maxImageWidth="0" showGitHubPageIfSynced="false" allowBrowsingInPreview="false" synchronizePreviewPosition="true" highlightPreviewType="NONE" highlightFadeOut="5" highlightOnTyping="true" synchronizeSourcePosition="true" verticallyAlignSourceAndPreviewSyncPosition="true" showSearchHighlightsInPreview="false" showSelectionInPreview="true" openRemoteLinks="true" replaceUnicodeEmoji="false" lastLayoutSetsDefault="false">
@@ -86,6 +89,9 @@
     <LinkMapSettings>
       <textMaps />
     </LinkMapSettings>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10" project-jdk-type="Python SDK" />
 </project>

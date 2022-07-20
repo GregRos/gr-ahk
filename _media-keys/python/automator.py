@@ -15,7 +15,8 @@ reset_track = subparsers.add_parser('restart-track', help='restarts current trac
 forward_track = subparsers.add_parser('next-track', help='next track')
 forward_album = subparsers.add_parser('skip-album', help='skip current album')
 restart_thing = subparsers.add_parser('restart-thing', help='restarts the current context')
-
+start_playlist = subparsers.add_parser('start-playlist', help='starts playlist with id')
+start_playlist.add_argument('playlist_id', type=str)
 spin = subparsers.add_parser('spin', help='changes context related to current track')
 spin.add_argument('what', choices=['album', 'artist'])
 
@@ -24,7 +25,6 @@ repeat.add_argument('mode', choices=['off', 'track', 'context'])
 
 play_pause = subparsers.add_parser('toggle-play', help='toggles play/pause')
 heart_parser = subparsers.add_parser('heart')
-heart_parser.add_argument('heart_type', choices=['track', 'artist', 'album'])
 
 dump_parser = subparsers.add_parser('dump', help='dump playing state')
 
@@ -97,6 +97,8 @@ class SpotifyAutomator:
                 spotify.toggle_pause()
             case 'dump':
                 spotify.dump_currently_playing()
+            case 'start-playlist':
+                spotify.start_playlist(cmd_args.playlist_id)
             case 'seek':
                 spotify.seek_time(cmd_args.seconds * 1000)
             case 'spin':
@@ -106,10 +108,6 @@ class SpotifyAutomator:
                     case 'album':
                         spotify.spin_album()
             case 'heart':
-                match cmd_args.heart_type:
-                    case 'track':
-                        spotify.heart_track()
-                    case 'artist':
-                        spotify.follow_artist()
-                    case 'album':
-                        spotify.heart_album()
+                spotify.heart_track()
+                spotify.follow_artist()
+                spotify.heart_album()

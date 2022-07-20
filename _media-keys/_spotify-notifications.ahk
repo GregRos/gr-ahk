@@ -9,6 +9,8 @@ GetTextForAction(action) {
     command:= cmd[1]
     arg:= cmd[2]
     switch command {
+case "start-playlist":
+    return "💿 playlist"
     case "next-track":
     return "⏭️ Next"
 case "previous-track":
