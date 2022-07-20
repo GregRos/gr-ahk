@@ -1,6 +1,6 @@
 ﻿global pythonMain := A_ScriptDir "\_media-keys\python\main.py"
 global Shell := ComObjCreate("Wscript.Shell")
-class SpotifyAutomator extends gMemberCheckingProxy {
+class SpotifyAutomator extends gDeclaredMembersOnly {
     _process := ""
     _onAction := []
     _cancelling := false
@@ -77,7 +77,7 @@ class SpotifyAutomator extends gMemberCheckingProxy {
             line := this.ReadNextLine()
             parts := StrSplit(line, " ")
             OutputDebug, % "RESULT " line
-            this.NotifyAction(origCmd, parts[3], gArr_Join(gArr_Slice(parts, 4), " "))
+            this.NotifyAction(origCmd, parts[3], gStr_Join(gArr_Slice(parts, 4), " "))
             if (parts[1] != this._lastAction) {
                 OutputDebug, % "Weird action difference"
             }

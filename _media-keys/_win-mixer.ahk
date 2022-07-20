@@ -31,7 +31,7 @@
     Return new VolumeController("")
 }
 
-class VolumeController extends gMemberCheckingProxy {
+class VolumeController extends gDeclaredMembersOnly {
     _invoker := ""
     __New(invoker) {
         this._invoker := invoker

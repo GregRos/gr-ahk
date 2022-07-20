@@ -42,7 +42,7 @@ OVWS_Action(w) {
     }
     OVWS_FixSize(target)
     if (target.rules.MaxIndex() > 0) {
-        rulesBroken:=gArr_Join(target.rules, ", ")
+        rulesBroken:=gStr_Join(target.rules, ", ")
         OutputDebug, [WeirdWindowFixer] Found %w% being naughty. BROKE RULES: %rulesBroken%
         WinMove, ahk_id %w%, , % target.x, % target.y, % target.w, % target.h
     }
