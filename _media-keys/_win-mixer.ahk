@@ -24,7 +24,7 @@
         If (PID == ProcessId)
         {
             ISimpleAudioVolume := ComObjQuery(IAudioSessionControl2, "{87CE5498-68D6-44E5-9215-6DA47EF883D8}")
-            invoker:= gSys_ComVTableInvoker(ISimpleAudioVolume).VtableCall(IAudioSessionControl2, IAudioSessionEnumerator)
+            invoker:= gSys_ComVTableInvoker(ISimpleAudioVolume, [IAudioSessionControl2, IAudioSessionEnumerator])
             return new VolumeController(invoker)
         }
     }

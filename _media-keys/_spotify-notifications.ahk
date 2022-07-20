@@ -1,18 +1,37 @@
-﻿global _mediaTT = TT("", "", "⚡ Spotify")
-_mediaTT.SETWINDOWTHEME("")
-_mediaTT.Color("White", "Black")
-_mediaTT.SETMARGIN(15, 15, 15, 15)
-_mediaTT.Font("S14, Segoe UI")
+﻿
+
+global _mediaTT
+
+_Spot_RecycleTT()
+global hits := 0
+
+_Spot_CreateMediaTT() {
+    _mediaTT := TT("", "", "⚡ Spotify")
+    _mediaTT.SETWINDOWTHEME("")
+    _mediaTT.Color("White", "Black")
+    _mediaTT.SETMARGIN(15, 15, 15, 15)
+    _mediaTT.Font("S14, Segoe UI")
+    return _mediaTT
+}
+
+_Spot_RecycleTT() {
+    global _mediaTT
+    if (_mediaTT) {
+        _mediaTT.Remove()
+    }
+    _mediaTT := _Spot_CreateMediaTT()
+    
+}
 
 GetTextForAction(action) {
     cmd:= StrSplit(action, " ")
     command:= cmd[1]
     arg:= cmd[2]
     switch command {
-case "start-playlist":
+    case "start-playlist":
     return "💿 playlist"
-    case "next-track":
-    return "⏭️ Next"
+case "next-track":
+return "⏭️ Next"
 case "previous-track":
 return "⏮️ Previous"
 case "toggle-play":
@@ -43,9 +62,17 @@ return "❤️ " Format("{:T}", arg)
 }
 
 _HideSpotifyTT() {
-    _mediaTT.Hide()
+    global hits
+    hits++
+    if (hits > 25) {    
+        hits := 0
+        _Spot_RecycleTT()
+    } else {
+        _mediaTT.Hide()
+    }
     SetTimer, _HideSpotifyTT, Off
 }
+
 
 OnSpotifyAction(action, status, error = "") {
     if (gWin_IsFullScreen()) {
