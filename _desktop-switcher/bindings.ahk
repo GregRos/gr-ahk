@@ -29,7 +29,9 @@ CapsLock::
     return
 
 #if GetHotkeyMode() != ""
-    RButton::Return
+RButton::
+    GetHotkeyMode()
+    Return
 LButton::Return
 
 #if GetHotkeyMode() = "C"
@@ -50,7 +52,7 @@ a::MoveCurrentWindowToLeftDesktop(True)
 4::MoveCurrentWindowToDesktop(4, True)
 5::MoveCurrentWindowToDesktop(5, True)
 #if GetHotkeyMode() = "CR"
-    d::MoveCurrentWindowToRightDesktop(False)
+d::MoveCurrentWindowToRightDesktop(False)
 a::MoveCurrentWindowToLeftDesktop(False)
 1::MoveCurrentWindowToDesktop(1, False)
 2::MoveCurrentWindowToDesktop(2, False)

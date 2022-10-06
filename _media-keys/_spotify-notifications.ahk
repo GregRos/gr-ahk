@@ -79,7 +79,7 @@ OnSpotifyAction(action, status, error = "") {
         return
     }
     actionText := GetTextForAction(action)
-    win := gWin_Get({title: "ahk_exe Spotify.exe"})
+    win := gWin_Get({title: "ahk_exe Spotify.exe", hiddenWindows: "on"})
     title := !win ? "Spotify" : win.Title
     tipIcon := ""
     switch status {

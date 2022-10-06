@@ -110,4 +110,3 @@ class SpotifyAutomator:
             case 'heart':
                 spotify.heart_track()
                 spotify.follow_artist()
-                spotify.heart_album()
