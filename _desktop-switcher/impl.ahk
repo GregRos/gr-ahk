@@ -177,6 +177,7 @@ _getSmartGitProjectName(hwnd) {
 }
 
 _searchSiblingWindows(hwnd, searchTitle) {
+    SetTitleMatchMode, RegEx
     DetectHiddenWindows, On
     WinGet, pid, PID, % "ahk_id " hwnd
     search := searchTitle " ahk_pid " pid
