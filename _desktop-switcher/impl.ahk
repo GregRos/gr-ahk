@@ -33,7 +33,6 @@ mapDesktopsFromRegistry()
     SessionId := getSessionId()
     if (SessionId) {
         RegRead, CurrentDesktopId, HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VirtualDesktops, CurrentVirtualDesktop
-
         if (CurrentDesktopId) {
             IdLength := StrLen(CurrentDesktopId)
         }
@@ -88,7 +87,7 @@ mapDesktopsFromRegistry()
         }
         if (!hit) {
             desktopIdToName[i] := "Desktop " i
-        } 
+        }
         name := desktopIdToName[i]
     }
     _g_desktopIdToName := desktopIdToName
@@ -290,6 +289,10 @@ isWindowNonMinimized(windowId) {
     return MMX != -1
 }
 
+_dll_call_isWindowOnDesktopNumberProc(windowID, n) {
+    return DllCall(IsWindowOnDesktopNumberProc, UInt, windowID, UInt, n)
+}
+
 getForemostWindowIdOnDesktop(n) {
     n := n - 1 ; Desktops start at 0, while in script it's 1
 
@@ -297,7 +300,7 @@ getForemostWindowIdOnDesktop(n) {
     WinGet winIDList, list
     Loop % winIDList {
         windowID := % winIDList%A_Index%
-        windowIsOnDesktop := DllCall(IsWindowOnDesktopNumberProc, UInt, windowID, UInt, n)
+        windowIsOnDesktop := _dll_call_isWindowOnDesktopNumberProc(windowID, n)
         ; Select the first (and foremost) window which is in the specified desktop.
         if (windowIsOnDesktop == 1) {
             return windowID
@@ -306,7 +309,9 @@ getForemostWindowIdOnDesktop(n) {
 }
 
 _moveWindowToDesktop(hwnd, desktopNumber) {
-    DllCall(MoveWindowToDesktopNumberProc, UInt, hwnd, UInt, desktopNumber - 1)
+        return DllCall(MoveWindowToDesktopNumberProc, UInt, hwnd, UInt, desktopNumber - 1)
+
+
 }
 
 _moveWindowAndRelatedToDesktop(hwnd, desktopNumber) {
@@ -316,32 +321,50 @@ _moveWindowAndRelatedToDesktop(hwnd, desktopNumber) {
 }
 
 MoveCurrentWindowToDesktop(desktopNumber, follow) {
-    WinGet, activeHwnd, ID, A
-    _moveWindowAndRelatedToDesktop(activeHwnd, desktopNumber)
-    if (follow) {
-        switchDesktopByNumber(desktopNumber)
+    Critical, On
+    try {
+        WinGet, activeHwnd, ID, A
+        _moveWindowAndRelatedToDesktop(activeHwnd, desktopNumber)
+        if (follow) {
+            switchDesktopByNumber(desktopNumber)
+        }
+    }
+    finally {
+        Critical, Off
     }
 }
 
 MoveCurrentWindowToRightDesktop(follow) {
-    global CurrentDesktop, DesktopCount
-    updateGlobalVariables()
-    WinGet, activeHwnd, ID, A
-    targetDesktop := CurrentDesktop + 1
-    if (CurrentDesktop >= DesktopCount) {
-        return
+    Critical, On
+    try {
+        global CurrentDesktop, DesktopCount
+        updateGlobalVariables()
+        WinGet, activeHwnd, ID, A
+        targetDesktop := CurrentDesktop + 1
+        if (CurrentDesktop >= DesktopCount) {
+            return
+        }
+        MoveCurrentWindowToDesktop(targetDesktop, follow)
     }
-    MoveCurrentWindowToDesktop(targetDesktop, follow)
+    finally {
+        Critical, Off
+    }
 }
 
 MoveCurrentWindowToLeftDesktop(follow) {
-    global CurrentDesktop, DesktopCount
-    updateGlobalVariables()
-    if (CurrentDesktop == 1) {
-        return
+    Critical, On
+    try {
+        global CurrentDesktop, DesktopCount
+        updateGlobalVariables()
+        if (CurrentDesktop == 1) {
+            return
+        }
+        targetDesktop := CurrentDesktop - 1
+        MoveCurrentWindowToDesktop(targetDesktop, follow)
     }
-    targetDesktop := CurrentDesktop - 1
-    MoveCurrentWindowToDesktop(targetDesktop, follow)
+    finally {
+        Critical, Off
+    }
 }
 
 ;
