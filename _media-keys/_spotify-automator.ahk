@@ -69,12 +69,13 @@ class SpotifyAutomator extends gDeclaredMembersOnly {
     }
 
     Exec(cmd) {
+        Thread, Priority, 20
         if (this._lastAction) {
             OutputDebug, % "Old task hasn't finished."
-            Sleep 50
             return
         }
         try {
+            
             Random, rnd, 1, 10000000
             this._origAction := origCmd
             this._lastAction := rnd
@@ -82,20 +83,23 @@ class SpotifyAutomator extends gDeclaredMembersOnly {
             cmd := rnd " " cmd
             OutputDebug, % cmd
             this.NotifyAction(origCmd, "RUNNING")
+            OutputDebug, % "NOTIFYED"
             this._process.StdIn.WriteLine(cmd)
+            OutputDebug, % "WROTE"
             line := this.ReadNextLine()
             parts := StrSplit(line, " ")
             OutputDebug, % "RESULT " line
-            this.NotifyAction(origCmd, parts[3], gStr_Join(gArr_Slice(parts, 4), " "))
             if (parts[1] != this._lastAction) {
                 OutputDebug, % "Weird action difference"
             }
+            this._lastAction := ""
         } catch err {
             MsgBox, % err.Message "`nGoing to restart process"
             this.CancelSpotifyAction()
         } finally {
-            this._lastAction := ""
+            Thread, Priority, 0
         }
+        this.NotifyAction(origCmd, parts[3], gStr_Join(gArr_Slice(parts, 4), " "))
 
     }
 }
