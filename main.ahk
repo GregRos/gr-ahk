@@ -60,9 +60,9 @@ Menu, Tray, Add, Exit, OnRealExit
 #include ..
 
 OnLoaded() {
-FWXD_Start()
-OVWS_Start()
-MK_Start()
+    FWXD_Start()
+    OVWS_Start()
+    MK_Start()
     VD_START()
 }
 
