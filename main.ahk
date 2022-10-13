@@ -3,7 +3,6 @@
 SendMode Input
 SetWorkingDir, %A_ScriptDir%
 SetTitleMatchMode, 2
-DetectHiddenWindows, On
 SetNumLockState, AlwaysOn
 SetCapsLockState, AlwaysOff
 Menu, Tray, Icon, images\icon.ico
@@ -44,8 +43,8 @@ Menu, Tray, Add, Suspend, OnRealSuspend
 Menu, Tray, Add, Restart, OnRealRestart
 Menu, Tray, Add, Exit, OnRealExit
 
-#include _desktop-switcher
-#include impl.ahk
+#include _vd
+#include _vd.ahk
 #include ..
 
 #include _media-keys
@@ -64,10 +63,13 @@ Menu, Tray, Add, Exit, OnRealExit
 #include impl.ahk
 #include ..
 
+; Init the different implementations
+VD.init()
+VD.getCurrentDesktopNum()
+
 FWXD_Start()
 OVWS_Start()
-DS_Start()
 MK_Start()
-#include _desktop-switcher\bindings.ahk
+#include _vd_system\bindings.ahk
 #include _media-keys\bindings.ahk
 

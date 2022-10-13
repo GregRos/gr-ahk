@@ -83,9 +83,7 @@ class SpotifyAutomator extends gDeclaredMembersOnly {
             cmd := rnd " " cmd
             OutputDebug, % cmd
             this.NotifyAction(origCmd, "RUNNING")
-            OutputDebug, % "NOTIFYED"
             this._process.StdIn.WriteLine(cmd)
-            OutputDebug, % "WROTE"
             line := this.ReadNextLine()
             parts := StrSplit(line, " ")
             OutputDebug, % "RESULT " line

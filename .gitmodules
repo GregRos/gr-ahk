@@ -1,0 +1,3 @@
+[submodule "vd"]
+	path = _vd
+	url = https://github.com/FuPeiJiang/VD.ahk.git
