@@ -8,8 +8,7 @@ SetCapsLockState, AlwaysOff
 Menu, Tray, Icon, images\icon.ico
 Menu, Tray, Tip, GR-AHK
 Menu, Tray, NoStandard
-#Maxthreads, 100
-#MaxThreadsPerHotkey, 4
+
 #include <sizeof>
 #include <_Struct>
 #include <gutils>
@@ -31,6 +30,7 @@ OnRealSuspend() {
 OnRealRestart() {
     Reload
 }
+
 
 global LoadedIndex := 1
 
@@ -59,17 +59,16 @@ Menu, Tray, Add, Exit, OnRealExit
 #include impl.ahk
 #include ..
 
-#include _kill-sublime-nag
-#include impl.ahk
-#include ..
-
-; Init the different implementations
-VD.init()
-VD.getCurrentDesktopNum()
-
+OnLoaded() {
 FWXD_Start()
 OVWS_Start()
 MK_Start()
+    VD_START()
+}
+
+
+SetTimer, OnLoaded, -500
+
 #include _vd_system\bindings.ahk
 #include _media-keys\bindings.ahk
 
