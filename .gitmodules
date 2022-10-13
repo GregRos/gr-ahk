@@ -1,3 +1,6 @@
 [submodule "vd"]
 	path = _vd
 	url = https://github.com/FuPeiJiang/VD.ahk.git
+[submodule "_vd"]
+	path = _vd
+	url = https://github.com/FuPeiJiang/VD.ahk.git
