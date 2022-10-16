@@ -27,14 +27,10 @@ CapsLock::
 
 #if GetHotkeyMode() != ""
 RButton::
-    if (GetHotkeyMode() == "") {
-        SendInput, {RButton down}
-    }
+
     Return
 LButton::
-    if (GetHotkeyMode() == "") {
-        SendInput, {LButton down}
-    }
+    Return
 
 #if GetHotkeyMode() = "C"
 1::vd.goToDesktopNum(1)
@@ -53,6 +49,7 @@ a::VD.goToDesktopNum(VD.MoveWindowToRelativeDesktopNum("A", -1))
 3::VD.goToDesktopNum(VD.MoveWindowToDesktopNum("A", 3))
 4::VD.goToDesktopNum(VD.MoveWindowToDesktopNum("A", 4))
 5::VD.goToDesktopNum(VD.MoveWindowToDesktopNum("A", 5))
+q::VD.TogglePinWindow("A")
 #if GetHotkeyMode() = "CR"
 d::VD.MoveWindowToRelativeDesktopNum("A", 1)
 a::VD.MoveWindowToRelativeDesktopNum("A", -1)

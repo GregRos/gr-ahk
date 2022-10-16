@@ -47,6 +47,10 @@ Menu, Tray, Add, Exit, OnRealExit
 #include _vd.ahk
 #include ..
 
+#include _vd_system
+#include impl.ahk
+#include ..
+
 #include _media-keys
 #include impl.ahk
 #include ..

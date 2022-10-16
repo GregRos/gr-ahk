@@ -1,4 +1,4 @@
-﻿global pythonMain := A_ScriptDir "\_media-keys\python\main.pyw"
+﻿global pythonMain := A_ScriptDir "\_media-keys\python\main.py"
 global Shell := ComObjCreate("Wscript.Shell")
 class SpotifyAutomator extends gDeclaredMembersOnly {
     _process := ""
@@ -33,9 +33,11 @@ class SpotifyAutomator extends gDeclaredMembersOnly {
         line := "python.exe " pythonMain
         this._process := Shell.Exec(line)
         SetTitleMatchMode, 2
+        WinHide, % "ahk_pid " this._process.ProcessId
         ; This is a fix for Windows 11 terminal replacement
         ; In this case, the WT window is not connected directly to the created process.
-        WinWaitActive, python.exe ahk_exe WindowsTerminal.exe
+        WinWaitActive, python.exe ahk_exe WindowsTerminal.exe, , 1
+        
         if (ErrorLevel == 0) {
             WinHide
         } else {
