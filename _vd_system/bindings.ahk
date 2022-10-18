@@ -27,10 +27,17 @@ CapsLock::
 
 #if GetHotkeyMode() != ""
 RButton::
-
+    if (GetHotkeyMode() == "") {
+        SendInput, {RButton down}
+    }
     Return
 LButton::
+    if (GetHotkeyMode() == "") {
+        SendInput, {LButton down}
+    }
     Return
+
+
 
 #if GetHotkeyMode() = "C"
 1::vd.goToDesktopNum(1)
@@ -42,22 +49,22 @@ d::vd.goToDesktopNum(vd.getCurrentDesktopNum() + 1)
 a::vd.goToDesktopNum(vd.getCurrentDesktopNum() - 1)
 z::VD_GotoPreviousDesktop()
 #if GetHotkeyMode() = "CL"
-d::VD.goToDesktopNum(VD.MoveWindowToRelativeDesktopNum("A", 1))
-a::VD.goToDesktopNum(VD.MoveWindowToRelativeDesktopNum("A", -1))
-1::VD.goToDesktopNum(VD.MoveWindowToDesktopNum("A", 1))
-2::VD.goToDesktopNum(VD.MoveWindowToDesktopNum("A", 2))
-3::VD.goToDesktopNum(VD.MoveWindowToDesktopNum("A", 3))
-4::VD.goToDesktopNum(VD.MoveWindowToDesktopNum("A", 4))
-5::VD.goToDesktopNum(VD.MoveWindowToDesktopNum("A", 5))
+d::_moveWindowRelAndFollow(1)
+a::_moveWindowRelAndFollow(-1)
+1::_moveWindowAndFollow(1)
+2::_moveWindowAndFollow(2)
+3::_moveWindowAndFollow(3)
+4::_moveWindowAndFollow(4)
+5::_moveWindowAndFollow(5)
 q::VD.TogglePinWindow("A")
 #if GetHotkeyMode() = "CR"
-d::VD.MoveWindowToRelativeDesktopNum("A", 1)
-a::VD.MoveWindowToRelativeDesktopNum("A", -1)
-1::VD.MoveWindowToDesktopNum("A", 1)
-2::VD.MoveWindowToDesktopNum("A", 2)
-3::VD.MoveWindowToDesktopNum("A", 3)
-4::VD.MoveWindowToDesktopNum("A", 4)
-5::VD.MoveWindowToDesktopNum("A", 5)
+d::_moveWindowAndRelatedDesktopRelative(1)
+a::_moveWindowAndRelatedDesktopRelative(-1)
+1::_moveActiveAndRelatedWindowToDesktop(1)
+2::_moveActiveAndRelatedWindowToDesktop(2)
+3::_moveActiveAndRelatedWindowToDesktop(3)
+4::_moveActiveAndRelatedWindowToDesktop(4)
+5::_moveActiveAndRelatedWindowToDesktop(5)
 
 #if
 #IfWinActive, ahk_exe chrome.exe

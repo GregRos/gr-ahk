@@ -3,6 +3,7 @@
 SendMode Input
 SetWorkingDir, %A_ScriptDir%
 SetTitleMatchMode, 2
+
 SetNumLockState, AlwaysOn
 SetCapsLockState, AlwaysOff
 Menu, Tray, Icon, images\icon.ico

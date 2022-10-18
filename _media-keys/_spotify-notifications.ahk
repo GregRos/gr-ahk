@@ -4,12 +4,12 @@ _Spot_RecycleTT()
 global hits := 0
 
 _Spot_CreateMediaTT() {
-    _mediaTT := TT("", "", "⚡ Spotify")
-    _mediaTT.SETWINDOWTHEME("")
-    _mediaTT.Color("White", "Black")
-    _mediaTT.SETMARGIN(15, 15, 15, 15)
-    _mediaTT.Font("S14, Segoe UI")
-    return _mediaTT
+    ttx := TT("ClickTrough", "", "")
+    ttx.SETWINDOWTHEME("")
+    ttx.Color("White", "Black")
+    ttx.SETMARGIN(15, 15, 15, 15)
+    ttx.Font("S18, Segoe UI")
+    return ttx
 }
 
 _Spot_RecycleTT() {
@@ -18,7 +18,6 @@ _Spot_RecycleTT() {
         _mediaTT.Remove()
     }
     _mediaTT := _Spot_CreateMediaTT()
-
 }
 
 GetTextForAction(action) {
@@ -62,7 +61,6 @@ return "❤️ " Format("{:T}", arg)
 _HideSpotifyTT() {
     global hits
     hits++
-    vd.MoveWindowToCurrentDesktop("ahk_id " )
     if (hits > 5) {
         hits := 0
         _Spot_RecycleTT()
@@ -77,23 +75,32 @@ OnSpotifyAction(action, status, error = "") {
         return
     }
     actionText := GetTextForAction(action)
-    win := gWin_Get({title: "ahk_exe Spotify.exe", hiddenWindows: "on"})
-    title := !win ? "Spotify" : win.Title
+    DetectHiddenWindows, On
+    WinGetTitle, title, % "ahk_exe Spotify.exe"
+    if (title == "") {
+        title := "[No Window]"
+    }
     tipIcon := ""
     switch status {
     case "RUNNING":
     _mediaTT.Color("White", "Black")
     _mediaTT.Title(actionText, 1)
-    _mediaTT.Text(title)
+    _mediaTT.Text("⏳ " title " ⏳")
     _mediaTT.Show(,A_ScreenWidth - 200, A_ScreenHeight - 200)
     SetTimer, _HideSpotifyTT, Off
     SetTimer, _HideSpotifyTT, 1000
 case "SUCCESS":
+    DetectHiddenWindows, On
+    WinGetTitle, title, % "ahk_exe Spotify.exe"
+    _mediaTT.Text("❧ " title " ☙")
+Sleep 500
+
 _mediaTT.Hide()
 SetTimer, _HideSpotifyTT, Off
 case "ERROR":
 _mediaTT.Icon(3)
-_mediaTT.Text(error)
+_mediaTT.Title(actionText, 1)
+_mediaTT.Text("⛔ "error " ⛔")
 _mediaTT.Color("", "Red")
 SetTimer, _HideSpotifyTT, 500
 

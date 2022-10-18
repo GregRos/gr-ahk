@@ -51,8 +51,10 @@ Numpad8::
 Return
 
 NumLock::
+    DetectHiddenWindows, On
     WinGet, hwnd, ID, ahk_exe Spotify.exe
-    WinActivate, ahk_exe Spotify.exe
+    vd.goToDesktopOfWindow("ahk_id " hwnd, True)
+
 Return
 #if
 #if GetNumpadMode() = "zero"
