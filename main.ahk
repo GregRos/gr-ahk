@@ -72,7 +72,7 @@ OnLoaded() {
 }
 
 
-SetTimer, OnLoaded, -500
+SetTimer, OnLoaded, -1000
 
 #include _vd_system\bindings.ahk
 #include _media-keys\bindings.ahk

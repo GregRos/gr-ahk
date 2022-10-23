@@ -3,21 +3,24 @@
 SendMode, Input
 SetBatchLines, -1
 SetWorkingDir, %A_ScriptDir%
-VD_DesktopStack := []
-VD_LastDesktop := "1"
-VD_LastWindow := ""
+global VD_DesktopStack := []
+global VD_LastDesktop := "~"
+global VD_LastWindow := ""
+
 class DesktopWindowState {
     __New(desktopIndex, activeHwnd) {
         this.desktopIndex := desktopIndex
         this.activeHwnd := activeHwnd
     }
 }
-
+global VD_DontUpdateHistory := False
 VD_DesktopUpdateTimer() {
     ; I know the callback for desktop switch exists, but it's better
     ; to just do it like this.
-    global VD_DesktopStack, VD_LastDesktop, VD_LastWindow
-    hwnd := gWin_Get({title: ""})
+    if (VD_DontUpdateHistory) {
+        return
+    }
+    hwnd := WinExist("A")
     if (VD_LastWindow != hwnd) {
         VD_LastWindow := hwnd
     }
@@ -32,18 +35,36 @@ VD_DesktopUpdateTimer() {
     VD_LastDesktop := current
 }
 
-
-
-VD_GotoPreviousDesktop() {
-    global VD_DesktopStack
-    ; Maybe there is a condition where it can become 0, don't care
-    if (VD_DesktopStack.MaxIndex() <= 1) {
-        return
+VD_GetLastDesktopPosWithVisibleWindow() {
+    DetectHiddenWindows, On
+    WinGet, Window, List
+    lastDesktop := 0
+    Loop, %Window% {
+        cur := Window%A_Index%
+        curDesktopNum := vd.getDesktopNumOfWindow("ahk_id " cur)
+        if (curDesktopNum > lastDesktop) {
+            lastDesktop := curDesktopNum
+        }
     }
-    lastDesktop := VD_DesktopStack.Pop()
-    vd.goToDesktopNum(lastDesktop)
+    return lastDesktop
 }
 
+VD_GotoPreviousDesktop() {
+    try {      
+        VD_DontUpdateHistory := True  
+        ; Maybe there is a condition where it can become 0, don't care
+        if (VD_DesktopStack.MaxIndex() <= 1) {
+            return
+        }
+        lastDesktop := VD_DesktopStack.Pop()
+        vd.goToDesktopNum(lastDesktop.desktopIndex)
+        if (lastDesktop.activeHwnd != "0x0") {
+            WinActivate, % "ahk_id " lastDesktop.activeHwnd
+        }
+    } finally {
+        VD_DontUpdateHistory := False
+    }
+}
 
 _vd_getJetBrainsProjectName(hwnd) {
     WinGetTitle, windowTitle, % "ahk_id " hwnd
@@ -64,8 +85,8 @@ _vd_getJetBrainsProjectName(hwnd) {
             }
         }
     }
-    
-    regex = i).*( (?:-|\Q%enDash%\E) \Q%project%\E|\Q%project%\E(?: [^\[] )?\Q%enDash%\E ).*
+
+regex = i).*( (?:-|\Q%enDash%\E) \Q%project%\E|\Q%project%\E(?: [^\[] )?\Q%enDash%\E ).*
 return regex
 }
 
@@ -166,7 +187,7 @@ _moveWindowAndFollow(desktopNum) {
 
 _moveWindowRelAndFollow(rel) {
     targetDesktop := vd.getCurrentDesktopNum() + rel
-   _moveWindowAndFollow(targetDesktop)
+    _moveWindowAndFollow(targetDesktop)
 }
 
 _notifyDesktopSwitched(oldDesktop, newDesktop) {
@@ -192,6 +213,7 @@ _d_hideTT() {
 
 VD_DesktopChanged(oldDesktop, newDesktop) {
     _notifyDesktopSwitched(oldDesktop, newDesktop)
+    VD_DesktopUpdateTimer()
 }
 global _desktopTT := TT("ClickTrough", "", "")
 
@@ -202,8 +224,12 @@ VD_START() {
     _desktopTT.SETMARGIN(30, 30, 30, 30)
     ; Init the different implementations
     VD.init()
-    SetTimer, VD_DesktopUpdateTimer, 350
     vd.RegisterDesktopNotifications()
     vd.CurrentVirtualDesktopChanged := Func("VD_DesktopChanged")
     Loaded("VirtualDesktops VD")
+}
+
+
+VD_Out(text) {
+    
 }

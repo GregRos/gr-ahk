@@ -47,7 +47,8 @@ LButton::
 5::vd.goToDesktopNum(5)
 d::vd.goToDesktopNum(vd.getCurrentDesktopNum() + 1)
 a::vd.goToDesktopNum(vd.getCurrentDesktopNum() - 1)
-z::VD_GotoPreviousDesktop()
+c::VD_GotoPreviousDesktop()
+e::vd.goToDesktopNum(VD_GetLastDesktopPosWithVisibleWindow())
 #if GetHotkeyMode() = "CL"
 d::_moveWindowRelAndFollow(1)
 a::_moveWindowRelAndFollow(-1)

@@ -76,7 +76,8 @@ OnSpotifyAction(action, status, error = "") {
     }
     actionText := GetTextForAction(action)
     DetectHiddenWindows, On
-    WinGetTitle, title, % "ahk_exe Spotify.exe"
+    SetTitleMatchMode, RegEx
+    WinGetTitle, title, % "ahk_exe i).*\\Spotify.exe"
     if (title == "") {
         title := "[No Window]"
     }
