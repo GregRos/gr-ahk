@@ -46,5 +46,5 @@ VD_GotoPreviousDesktop() {
         return
     }
     lastDesktop := VD_DesktopStack.Pop()
-    vd.goToDesktopNum(lastDesktop)
+    vd.goToDesktopNum(lastDesktop.desktopIndex)
 }
