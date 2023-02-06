@@ -113,7 +113,6 @@ Return
 Numpad2::
     spotify.Exec("start-playlist 3aCWycDjhkVtsx1G8OyULu")
 Return
-#if
 
 Numpad7::
     spotify.Exec("spin song")
@@ -127,6 +126,10 @@ Numpad9::
 Numpad5::
     spotify.Exec("skip-5")
     Return
+
+#if 
+
+
 Numpad0::
 Return
 
