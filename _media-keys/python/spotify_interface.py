@@ -18,9 +18,9 @@ scopes = [
     # 'user-follow-read',
     # 'user-top-read',
     # 'user-read-playback-position',
-    # 'playlist-read-private',
+    'playlist-read-private',
     # 'playlist-read-collaborative',
-    # 'playlist-modify-private',
+    'playlist-modify-private',
     # 'app-remote-control'
 ]
 
@@ -32,6 +32,9 @@ def get_artist(now_playing: benedict):
 
 def get_album(now_playing: benedict):
     return now_playing.get('item.album.id', None)
+
+
+my_playlist = 'spotify:playlist:5mIQzCcXAhZMNZhISAV8Rb'
 
 
 def is_different_artists(now_playing1: benedict, now_playing2: benedict):
@@ -132,8 +135,9 @@ class SpotifyInterface:
     def prev_track(self):
         self._spotify.previous_track()
 
-    def next_track(self):
-        self._spotify.next_track()
+    def next_track(self, count=1):
+        for i in range(0, count):
+            self._spotify.next_track()
 
     def toggle_pause(self):
         current = self._get_current()
@@ -155,12 +159,18 @@ class SpotifyInterface:
     def set_repeat(self, mode):
         self._spotify.repeat(mode)
 
+    def rename_playlist(self, playlist: str, new_name: str, new_desc: str):
+        self._spotify.playlist_change_details(playlist_id=playlist, name=new_name, description=new_desc)
+
     def start_playlist(self, playlist: str):
         pl = self._spotify.playlist(
             playlist_id=playlist
         )
         self._spotify.start_playback(
-            context_uri=pl['uri']
+            context_uri=pl['uri'],
+            offset={
+                'position': 0
+            }
         )
 
     def skip_album(self):
@@ -194,11 +204,30 @@ class SpotifyInterface:
     def dump_currently_playing(self):
         print(json.dumps(self._get_current()))
 
+    def clean_playlist(self, target_plid: str):
+        result = self._spotify.playlist_items(playlist_id=target_plid)
+        all_uris = [track.get('track').get('id') for track in result.get('items')]
+        self._spotify.playlist_remove_all_occurrences_of_items(playlist_id=my_playlist, items=all_uris)
+
+    def spin_song(self):
+        playback = self._get_current()
+        artist_name = playback.get("item.artists[0].name")
+        track_name = playback.get("item.name")
+        generated_for = f"LIKE « {artist_name} - {track_name} »"
+        self.rename_playlist(my_playlist, generated_for, "Generated automatically.")
+        uri = playback.get('item.uri')
+        recs = benedict(self._spotify.recommendations(seed_tracks=[uri]))
+        tracks = [track.get('id') for track in recs.get('tracks')]
+        self.clean_playlist(my_playlist)
+        self._spotify.playlist_add_items(my_playlist, tracks)
+        time.sleep(1)
+        self.start_playlist(my_playlist)
+
     def spin_album(self):
         playback = self._get_current()
         album_uri = playback.get('item.album.uri')
         self._spotify.start_playback(context_uri=album_uri, offset={
-            'position': 1
+            'position': 0
         })
 
     def spin_artist(self):

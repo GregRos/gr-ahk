@@ -13,12 +13,13 @@ subparsers = root_parser.add_subparsers(title='actions', required=True, dest='co
 backward_track = subparsers.add_parser('previous-track', help='previous track')
 reset_track = subparsers.add_parser('restart-track', help='restarts current track', )
 forward_track = subparsers.add_parser('next-track', help='next track')
+skip_5 = subparsers.add_parser('skip-5', help='skips 5 tracks')
 forward_album = subparsers.add_parser('skip-album', help='skip current album')
 restart_thing = subparsers.add_parser('restart-thing', help='restarts the current context')
 start_playlist = subparsers.add_parser('start-playlist', help='starts playlist with id')
 start_playlist.add_argument('playlist_id', type=str)
 spin = subparsers.add_parser('spin', help='changes context related to current track')
-spin.add_argument('what', choices=['album', 'artist'])
+spin.add_argument('what', choices=['album', 'artist', 'song'])
 
 repeat = subparsers.add_parser('repeat', help='change replay mode')
 repeat.add_argument('mode', choices=['off', 'track', 'context'])
@@ -85,6 +86,8 @@ class SpotifyAutomator:
                 spotify.set_repeat(cmd_args.mode)
             case 'restart-thing':
                 spotify.restart_thing()
+            case 'skip-5':
+                spotify.next_track(count=5)
             case 'next-track':
                 spotify.next_track()
             case 'previous-track':
@@ -107,6 +110,8 @@ class SpotifyAutomator:
                         spotify.spin_artist()
                     case 'album':
                         spotify.spin_album()
+                    case 'song':
+                        spotify.spin_song()
             case 'heart':
                 spotify.heart_track()
                 spotify.follow_artist()
